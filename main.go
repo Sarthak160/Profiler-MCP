@@ -12,12 +12,12 @@ import (
 
 func main() {
 	// Create MCP server
-	s := server.NewMCPServer("Pprof Inspector", "0.1.0")
+	s := server.NewMCPServer("Profiler MCP", "0.1.0")
 
 	// Tool 1: analyze_profile
 	analyzeTool := mcp.NewTool("analyze_profile",
-		mcp.WithDescription("Analyze a pprof profile (cpu, heap, etc.) to identify performance bottlenecks and hot paths. Requires a path or URL to the profile."),
-		mcp.WithString("profile_path_or_url", mcp.Required(), mcp.Description("The local file path or remote HTTP URL to the pprof profile. Example: 'cpu.prof'")),
+		mcp.WithDescription("Analyze a profile to identify performance bottlenecks. Supports Go pprof profiles (e.g. cpu.prof), Python scripts (e.g. script.py), OR compiled Java JARs (e.g. app.jar)."),
+		mcp.WithString("profile_path_or_url", mcp.Required(), mcp.Description("The local file path or remote HTTP URL to the pprof profile, a .py script, or a .jar file. Example: 'cpu.prof', 'main.py', or 'server.jar'")),
 		mcp.WithString("sample_index", mcp.Description("Optional. The sample value to report (e.g. 'alloc_space', 'inuse_space' for heap profiles)")),
 	)
 	s.AddTool(analyzeTool, analyzeProfileHandler)

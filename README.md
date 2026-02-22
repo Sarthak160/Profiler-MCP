@@ -1,14 +1,14 @@
-# Profiler-MCP (Performance Inspector)
+# Pprof Inspector (Polyglot Performance MCP)
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that gives your AI Coding Agent the ability to autonomously analyze Go application performance bottlenecks using `go tool pprof`.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that gives your AI Coding Agent the ability to autonomously analyze application performance bottlenecks across multiple languages (Go, Python, and Java).
 
-Instead of blindly guessing why an application is slow or leaking memory, this server allows an LLM (like Claude or Copilot via an MCP client) to ingest actual profiling data, read the hot paths, and even spin up an interactive Flamegraph UI for you to inspect locally.
+Instead of blindly guessing why an application is slow or leaking memory, this server allows an LLM (like Claude or Copilot via an MCP client) to ingest actual profiling data, read the hot paths, and even spin up interactive Flamegraph UIs for you to inspect locally.
 
-## Features
+## Features & Supported Languages
 
-- 🕵️‍♂️ **CPU Profile Analysis**: Parses `cpu.prof` and returns a summarized, LLM-friendly textual analysis of where time is being spent.
-- 🧠 **Memory/Heap Profiling**: Supports `-sample_index` filtering (`alloc_space`, `inuse_objects`, etc.) to track down memory leaks in `mem.prof`.
-- 🔥 **Interactive Flamegraphs**: The AI can launch an ephemeral `pprof` web server in the background and hand you a clickable `http://localhost:<port>` link directly in the chat so you can explore the flamegraph visually.
+- � **Go (`pprof`)**: Parses `cpu.prof` and `mem.prof`. Supports `-sample_index` filtering (`alloc_space`, `inuse_objects`) and can launch background interactive **Flamegraphs**.
+- 🐍 **Python (`cProfile`)**: Feed it a `.py` script (e.g. `main.py`). The server will automatically execute it with `cProfile` and return the cumulative time bottlenecks to the AI.
+- ☕ **Java (`Flight Recorder`)**: Feed it a `.jar` file. The server will execute it with Java Flight Recorder (JFR) enabled, profiling it for 60 seconds and saving an `mcp-recording.jfr` for you to analyze in Java Mission Control.
 
 ## Pre-requisites
 
